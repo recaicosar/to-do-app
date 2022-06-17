@@ -70,6 +70,7 @@ export const Table = ({
                   <input
                     type="checkbox"
                     value={item.id}
+                    checked={selectedChecked.includes(item.id)}
                     onChange={(e) => handleCheck(e)}
                   />
                 </label>

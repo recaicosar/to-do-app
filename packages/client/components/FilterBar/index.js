@@ -13,18 +13,16 @@ import {
   Grid,
 } from "@mui/material";
 
-
 const FilterBar = () => {
   const dispatch = useDispatch();
   const { loading, priorities, filters } = useSelector((state) => state.todos);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    
-    
-
-
-    setInputs({ ...inputs, [name]: todoFormSetter(inputs,priorities,name,value) });
+    setInputs({
+      ...inputs,
+      [name]: todoFormSetter(inputs, priorities, name, value),
+    });
   };
 
   const initForm = {
@@ -38,10 +36,8 @@ const FilterBar = () => {
   const [inputs, setInputs] = useState(initForm.inputs);
 
   const handleSubmit = (e) => {
-
     dispatch(filterTodo(inputs));
     e.preventDefault();
-
   };
 
   return (

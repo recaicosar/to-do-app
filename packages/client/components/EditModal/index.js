@@ -12,9 +12,15 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import { todoFormSetter } from "@/utils/helper";
 
-export const EditModal = ({ open, item, handleClose, onUpdate,priorities }) => {
-
+export const EditModal = ({
+  open,
+  item,
+  handleClose,
+  onUpdate,
+  priorities,
+}) => {
   const initForm = {
     inputs: item,
   };
@@ -26,16 +32,11 @@ export const EditModal = ({ open, item, handleClose, onUpdate,priorities }) => {
   }, [item]);
 
   const handleChange = (event) => {
-    const {name,value} = event.target
-    let result =
-      typeof inputs.priority === "object" && name === "priority"
-        ? {
-            score: value,
-            title: priorities.find((item) => item.score === value)
-              ?.title,
-          }
-        : value;
-    setInputs({ ...inputs, [name]: result });
+    const { name, value } = event.target;
+    setInputs({
+      ...inputs,
+      [name]: todoFormSetter(inputs, priorities, name, value),
+    });
   };
 
   const handleSubmit = (e) => {
@@ -60,12 +61,9 @@ export const EditModal = ({ open, item, handleClose, onUpdate,priorities }) => {
           name="name"
           onChange={handleChange}
         />
-        <FormControl fullWidth sx={{marginTop:2}}
->
+        <FormControl fullWidth sx={{ marginTop: 2 }}>
           <InputLabel id="priority-label">Choose</InputLabel>
           <Select
-                   
-
             name="priority"
             label="Priority"
             labelId="priority-label"
@@ -100,7 +98,7 @@ EditModal.propTypes = {
   item: PropTypes.object,
   handleClose: PropTypes.func,
   onUpdate: PropTypes.func,
-  priorities:PropTypes.array
+  priorities: PropTypes.array,
 };
 
 EditModal.defaultProps = {
@@ -108,6 +106,5 @@ EditModal.defaultProps = {
   opened: false,
   handleClose: () => {},
   onUpdate: () => {},
-  priorities:[]
-
+  priorities: [],
 };
