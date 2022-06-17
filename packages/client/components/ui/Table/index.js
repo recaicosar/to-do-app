@@ -95,7 +95,7 @@ export const Table = ({
           ))
         ) : (
           <tr>
-            <td colspan="4">{noItemFoundText}</td>
+            <td colSpan="4">{noItemFoundText}</td>
           </tr>
         )}
       </tbody>
