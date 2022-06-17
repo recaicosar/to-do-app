@@ -5,6 +5,7 @@ import { IconButton } from "@mui/material";
 import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 import { filterList } from "@/utils/helper";
 import { useDialog } from "muibox";
+import isEmpty from "lodash.isempty";
 
 export const Table = ({
   items,
@@ -23,6 +24,12 @@ export const Table = ({
     if (checked) setSelectedChecked([...selectedChecked, value]);
     else setSelectedChecked(selectedChecked.filter((i) => i !== value));
   };
+
+  const { name, priority } = filters;
+  const noItemFoundText =
+    isEmpty(name) && isEmpty(priority)
+      ? "there are no records "
+      : "No Record Found";
 
   const filtered = filterList(items, filters);
 
@@ -55,36 +62,42 @@ export const Table = ({
       </thead>
 
       <tbody>
-        {filtered.map((item, index) => (
-          <tr key={index}>
-            <td>
-              <label>
-                <input
-                  type="checkbox"
-                  value={item.id}
-                  onChange={(e) => handleCheck(e)}
-                />
-              </label>
-            </td>
-            <td>{item.name}</td>
-            <td>
-              <span className={`status-${item.priority.score}`}>
-                {item.priority.title}
-              </span>
-            </td>
-            <td>
-              <IconButton size="small" onClick={() => onEdit(item)}>
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() => onDelete({ id: item.id })}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </td>
+        {filtered.length > 0 ? (
+          filtered.map((item, index) => (
+            <tr key={index}>
+              <td>
+                <label>
+                  <input
+                    type="checkbox"
+                    value={item.id}
+                    onChange={(e) => handleCheck(e)}
+                  />
+                </label>
+              </td>
+              <td>{item.name}</td>
+              <td>
+                <span className={`status-${item.priority.score}`}>
+                  {item.priority.title}
+                </span>
+              </td>
+              <td>
+                <IconButton size="small" onClick={() => onEdit(item)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={() => onDelete({ id: item.id })}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colspan="4">{noItemFoundText}</td>
           </tr>
-        ))}
+        )}
       </tbody>
     </table>
   );
