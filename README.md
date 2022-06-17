@@ -8,21 +8,21 @@ React, Redux Toolkit and Persist
 
 #### install lerna globally
 
-```http
+```bash
  yarn global add lerna
 ```
 
-```http
+```bash
  npx install --global lerna
 ```
 
 #### Setup
 
-```http
+```bash
   yarn setup
 ```
 
 
-```http
+```bash
   yarn dev
 ```
