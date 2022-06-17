@@ -6,9 +6,7 @@
       },
       "target": "es6",
       "module": "commonjs",
-      "experimentalDecorators": true,
-      "include": ["./node_modules/redux-persist/types"]
-
+      "experimentalDecorators": true    
     }
   }
   
