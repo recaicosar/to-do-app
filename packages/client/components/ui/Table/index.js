@@ -4,20 +4,27 @@ import styles from "./Table.module.scss";
 import { IconButton } from "@mui/material";
 import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 import { filterList } from "@/utils/helper";
+import { useDialog } from "muibox";
 
-export const Table = ({ items,filters, columns, onEdit, onDelete, onMultiDelete }) => {
+export const Table = ({
+  items,
+  filters,
+  columns,
+  onEdit,
+  onDelete,
+  onMultiDelete,
+}) => {
   const [selectedChecked, setSelectedChecked] = useState([]);
+  const dialog = useDialog();
 
   const handleCheck = (e) => {
     const { value, checked } = e.target;
 
     if (checked) setSelectedChecked([...selectedChecked, value]);
-    else
-      setSelectedChecked(selectedChecked.filter((i) => i !== value));
+    else setSelectedChecked(selectedChecked.filter((i) => i !== value));
   };
 
-  const filtered = filterList(items,filters);
-
+  const filtered = filterList(items, filters);
 
   return (
     <table className={styles.table}>
@@ -27,7 +34,12 @@ export const Table = ({ items,filters, columns, onEdit, onDelete, onMultiDelete 
             {selectedChecked?.length > 0 && (
               <IconButton
                 size="small"
-                onClick={() => onMultiDelete({ ids: selectedChecked })}
+                onClick={() =>
+                  dialog.confirm("Are you sure?").then(() => {
+                    onMultiDelete({ ids: selectedChecked });
+                    setSelectedChecked();
+                  })
+                }
               >
                 <DeleteIcon />
               </IconButton>
@@ -55,12 +67,19 @@ export const Table = ({ items,filters, columns, onEdit, onDelete, onMultiDelete 
               </label>
             </td>
             <td>{item.name}</td>
-            <td><span className={`status-${item.priority.score}`}>{item.priority.title}</span></td>
+            <td>
+              <span className={`status-${item.priority.score}`}>
+                {item.priority.title}
+              </span>
+            </td>
             <td>
               <IconButton size="small" onClick={() => onEdit(item)}>
                 <EditIcon />
               </IconButton>
-              <IconButton size="small" onClick={() => onDelete({ id:item.id })}>
+              <IconButton
+                size="small"
+                onClick={() => onDelete({ id: item.id })}
+              >
                 <DeleteIcon />
               </IconButton>
             </td>
@@ -73,7 +92,7 @@ export const Table = ({ items,filters, columns, onEdit, onDelete, onMultiDelete 
 
 Table.propTypes = {
   items: PropTypes.array,
-  filters:PropTypes.object,
+  filters: PropTypes.object,
   columns: PropTypes.array,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
@@ -82,7 +101,7 @@ Table.propTypes = {
 
 Table.defaultProps = {
   items: [],
-  filters:{},
+  filters: {},
   columns: ["name", "status"],
   onEdit: () => {},
   onDelete: () => {},
