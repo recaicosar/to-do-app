@@ -1,0 +1,25 @@
+.addtodo {
+  form {
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :global {
+      .MuiTextField-root {
+        .MuiFormLabel-root {
+          top:6px;
+  
+        }
+      }
+      .MuiInputLabel-root {
+        font-size: 13px;
+        line-height: 1;
+
+        &.Mui-focused {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}

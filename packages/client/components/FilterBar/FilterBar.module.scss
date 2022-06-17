@@ -1,0 +1,49 @@
+.filterbar {
+  form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border:1px solid #dddddd;
+
+    :global {
+      .MuiTextField-root {
+      .MuiFormLabel-root {
+        top:6px;
+
+      }
+    }
+      .MuiInputLabel-root {
+        font-size: 13px;
+        line-height: 1;
+
+        &.Mui-focused {
+          font-size: 1rem;
+        }
+      }
+    .MuiOutlinedInput-root{
+      background-color: white;
+    }
+    .MuiButton-root{
+      background-color: rgba(0, 0, 0 , 0.18);
+      border-color: #0063cc;
+      color:white;
+      font-weight: bold;
+      &::hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+        box-shadow: none;
+      }
+      &::active {
+        box-shadow: 'none';
+        background-color: #0062cc;
+        border-color: #005cbf;
+      }
+      &::focus {
+        box-shadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+      }
+    }
+
+    }
+  }
+}
