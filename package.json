@@ -5,8 +5,7 @@
     "setup": "lerna bootstrap",
     "dev": "lerna run dev",
     "watch": "lerna run dev --parallel",
-    "client-dev":"lerna run dev --scope client",
-    "storybook":"lerna run storybook --scope ui-kit"
+    "client-dev":"lerna run dev --scope client"
   },
   "devDependencies": {
     "lerna": "^5.1.1"
