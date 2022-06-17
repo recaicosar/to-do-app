@@ -44,7 +44,7 @@ export const Table = ({
                 onClick={() =>
                   dialog.confirm("Are you sure?").then(() => {
                     onMultiDelete({ ids: selectedChecked });
-                    setSelectedChecked();
+                    setSelectedChecked([]);
                   })
                 }
               >
