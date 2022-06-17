@@ -21,7 +21,9 @@ React, Redux Toolkit and Persist
 ```bash
   yarn setup
 ```
-
+```bash
+  yarn watch
+```
 
 ```bash
   yarn dev
