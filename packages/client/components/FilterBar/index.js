@@ -7,9 +7,8 @@ import {
   Select,
   FormControl,
   MenuItem,
-  InputLabel,
+  OutlinedInput ,
   Button,
-  TextField,
   Grid,
 } from "@mui/material";
 
@@ -51,11 +50,12 @@ const FilterBar = () => {
           justifyContent="space-evenly"
         >
           <Grid item xs={6}>
-            <TextField
+            <OutlinedInput 
               fullWidth
+              placeholder="Todo Name"
               id="standard-basic"
+              
               size="small"
-              label="Standard"
               variant="outlined"
               name="name"
               value={inputs.name}
@@ -64,12 +64,10 @@ const FilterBar = () => {
           </Grid>
           <Grid item xs={4}>
             <FormControl fullWidth>
-              <InputLabel id="priority-label">Choose</InputLabel>
               <Select
                 name="priority"
-                label="Priority"
-                labelId="priority-label"
                 id="priority-label"
+                displayEmpty
                 size="small"
                 variant="outlined"
                 defaultValue={inputs.priority.score || ""}
@@ -77,7 +75,7 @@ const FilterBar = () => {
                 onChange={handleChange}
               >
                 <MenuItem value="">
-                  <em>Choose</em>
+                  <em>Choose Priority</em>
                 </MenuItem>
                 {priorities?.length > 0 &&
                   !loading &&
@@ -99,19 +97,6 @@ const FilterBar = () => {
     </div>
   );
 
-  /*
-
-  return (
-    <div>
-      <div className="filter">
-            <button className="select" >All</button>
-          <button className="select" onClick={()=> dispatch(filterComplated())} >Complated</button>
-          <button className="select" onClick={()=> dispatch(filterUnComplated())}>UnComplated</button>
-      </div>
-    </div>
-  );
-
-  */
 };
 
 export default FilterBar;
