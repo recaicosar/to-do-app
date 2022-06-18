@@ -26,7 +26,7 @@ const TodoList = () => {
             setEditOpen(true);
           }}
           onDelete={(e) =>
-            dialog.confirm("Are you sure?").then(() => dispatch(delTodo(e)))
+            dialog.confirm("Are you sure?").then(() => dispatch(delTodo(e))).catch(() => {})
           }
           onMultiDelete={(e) => dispatch(multiDelTodo(e))}
         />
