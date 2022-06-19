@@ -15,6 +15,5 @@ export const useTodoInputs = (params, priorities) => {
       [name]: todoFormSetter(params, priorities, name, value),
     });
   };
-
   return [inputs, handleChange];
 };
