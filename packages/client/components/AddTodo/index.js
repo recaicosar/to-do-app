@@ -2,7 +2,7 @@ import styles from "./AddTodo.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useDialog } from "muibox";
 import isEmpty from "lodash.isempty";
-import { useTodoInputs } from "@/Hooks/useTodoInputs";
+import { useTodoInputs } from "@/hooks/useTodoInputs";
 import { addTodo } from "@/redux/todos/todoSlices";
 import { uuidv4 } from "@/utils/helper";
 import {

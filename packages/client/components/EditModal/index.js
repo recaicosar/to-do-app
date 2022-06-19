@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { useTodoInputs } from "@/Hooks/useTodoInputs";
+import { useTodoInputs } from "@/hooks/useTodoInputs";
 
 export const EditModal = ({
   open,

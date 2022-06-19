@@ -1,7 +1,7 @@
 import styles from "./FilterBar.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { filterTodo } from "@/redux/todos/todoSlices";
-import { useTodoInputs } from "@/Hooks/useTodoInputs";
+import { useTodoInputs } from "@/hooks/useTodoInputs";
 import {
   Select,
   FormControl,
