@@ -1,11 +1,10 @@
-import React, { useState } from "react";
 import styles from "./AddTodo.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useDialog } from "muibox";
 import isEmpty from "lodash.isempty";
-
+import { useTodoInputs } from "@/Hooks/useTodoInputs";
 import { addTodo } from "@/redux/todos/todoSlices";
-import { uuidv4, todoFormSetter } from "@/utils/helper";
+import { uuidv4 } from "@/utils/helper";
 import {
   Select,
   FormControl,
@@ -23,22 +22,11 @@ const AddTodo = () => {
   const dialog = useDialog();
 
   const initForm = {
-    inputs: {
-      id: uuidv4(),
-      name: "",
-      priority: {},
-    },
+    id: uuidv4(),
+    name: "",
+    priority: {},
   };
-  const [inputs, setInputs] = useState(initForm.inputs);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setInputs({
-      ...inputs,
-      [name]: todoFormSetter(inputs, priorities, name, value),
-    });
-  };
+  const [inputs, setInputs] = useTodoInputs(initForm, priorities);
 
   const handleSubmit = (e) => {
     setInputs({ ...inputs, id: uuidv4() });
@@ -50,7 +38,7 @@ const AddTodo = () => {
       dispatch(addTodo(inputs));
 
       setTimeout(() => {
-        setInputs({ ...initForm.inputs });
+        setInputs({ ...initForm });
       }, 3000);
     }
 
@@ -71,7 +59,7 @@ const AddTodo = () => {
               variant="outlined"
               name="name"
               value={inputs.name}
-              onChange={handleChange}
+              onChange={setInputs}
             />
           </Grid>
           <Grid item xs={4}>
@@ -84,9 +72,9 @@ const AddTodo = () => {
                 id="priority-label"
                 size="small"
                 variant="outlined"
-                defaultValue={inputs.priority.score || ""}
-                value={inputs.priority.score || ""}
-                onChange={handleChange}
+                defaultValue={inputs.priority?.score || ""}
+                value={inputs.priority?.score || ""}
+                onChange={setInputs}
               >
                 <MenuItem disabled value="">
                   <em>Choose</em>

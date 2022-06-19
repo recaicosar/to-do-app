@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Select,
@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { todoFormSetter } from "@/utils/helper";
+import { useTodoInputs } from "@/Hooks/useTodoInputs";
 
 export const EditModal = ({
   open,
@@ -21,23 +21,18 @@ export const EditModal = ({
   onUpdate,
   priorities,
 }) => {
-  const initForm = {
-    inputs: item,
-  };
 
-  const [inputs, setInputs] = useState({});
+const initForm = {
+  id:"",
+  name:"",
+  priority: {}
+}
+
+  const [inputs, setInputs] = useTodoInputs(initForm,priorities);
 
   useEffect(() => {
-    setInputs({ ...initForm.inputs });
+    setInputs(item);
   }, [item]);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setInputs({
-      ...inputs,
-      [name]: todoFormSetter(inputs, priorities, name, value),
-    });
-  };
 
   const handleSubmit = (e) => {
     onUpdate(inputs);
@@ -59,7 +54,7 @@ export const EditModal = ({
           variant="standard"
           value={inputs.name}
           name="name"
-          onChange={handleChange}
+          onChange={setInputs}
         />
         <FormControl fullWidth sx={{ marginTop: 2 }}>
           <InputLabel id="priority-label">Choose</InputLabel>
@@ -72,7 +67,7 @@ export const EditModal = ({
             variant="outlined"
             defaultValue={inputs?.priority?.score || ""}
             value={inputs?.priority?.score || ""}
-            onChange={handleChange}
+            onChange={setInputs}
           >
             {priorities?.length > 0 &&
               priorities?.map(({ score, title }, index) => (
@@ -94,7 +89,7 @@ export const EditModal = ({
 };
 
 EditModal.propTypes = {
-  opened: PropTypes.bool,
+  open: PropTypes.bool,
   item: PropTypes.object,
   handleClose: PropTypes.func,
   onUpdate: PropTypes.func,
@@ -103,7 +98,7 @@ EditModal.propTypes = {
 
 EditModal.defaultProps = {
   item: {},
-  opened: false,
+  open: false,
   handleClose: () => {},
   onUpdate: () => {},
   priorities: [],

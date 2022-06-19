@@ -1,13 +1,12 @@
-import { useState } from "react";
 import styles from "./FilterBar.module.scss";
 import { useSelector, useDispatch } from "react-redux";
 import { filterTodo } from "@/redux/todos/todoSlices";
-import { todoFormSetter } from "@/utils/helper";
+import { useTodoInputs } from "@/Hooks/useTodoInputs";
 import {
   Select,
   FormControl,
   MenuItem,
-  OutlinedInput ,
+  OutlinedInput,
   Button,
   Grid,
 } from "@mui/material";
@@ -16,23 +15,13 @@ const FilterBar = () => {
   const dispatch = useDispatch();
   const { loading, priorities, filters } = useSelector((state) => state.todos);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setInputs({
-      ...inputs,
-      [name]: todoFormSetter(inputs, priorities, name, value),
-    });
-  };
-
   const initForm = {
-    inputs: {
-      name: "",
-      priority: {},
-      ...filters,
-    },
+    name: "",
+    priority: {},
+    ...filters,
   };
 
-  const [inputs, setInputs] = useState(initForm.inputs);
+  const [inputs, setInputs] = useTodoInputs(initForm, priorities);
 
   const handleSubmit = (e) => {
     dispatch(filterTodo(inputs));
@@ -50,16 +39,15 @@ const FilterBar = () => {
           justifyContent="space-evenly"
         >
           <Grid item xs={6}>
-            <OutlinedInput 
+            <OutlinedInput
               fullWidth
               placeholder="Todo Name"
               id="standard-basic"
-              
               size="small"
               variant="outlined"
               name="name"
               value={inputs.name}
-              onChange={handleChange}
+              onChange={setInputs}
             />
           </Grid>
           <Grid item xs={4}>
@@ -72,7 +60,7 @@ const FilterBar = () => {
                 variant="outlined"
                 defaultValue={inputs.priority.score || ""}
                 value={inputs.priority.score || ""}
-                onChange={handleChange}
+                onChange={setInputs}
               >
                 <MenuItem value="">
                   <em>Choose Priority</em>
@@ -96,7 +84,6 @@ const FilterBar = () => {
       </form>
     </div>
   );
-
 };
 
 export default FilterBar;

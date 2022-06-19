@@ -42,12 +42,13 @@ export const Table = ({
               <IconButton
                 size="small"
                 onClick={() =>
-                  dialog.confirm("Are you sure?")
-                  .then(() => {
-                    onMultiDelete({ ids: selectedChecked });
-                    setSelectedChecked([]);
-                  })
-                  .catch(() => {})
+                  dialog
+                    .confirm("Are you sure?")
+                    .then(() => {
+                      onMultiDelete({ ids: selectedChecked });
+                      setSelectedChecked([]);
+                    })
+                    .catch(() => {})
                 }
               >
                 <DeleteIcon />
